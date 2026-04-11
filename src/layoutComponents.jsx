@@ -20,23 +20,26 @@ import {
 	WiNightClear,
 	WiNightFog,
 } from "react-icons/wi";
+import { ClockDisplay } from "./ClockDisplay.jsx";
 
 export function FocusLayout(props) {
-	const { now, weather } = props;
+	const { now, weather, animateClock } = props;
 
 	const date = dayjs(now).format("dddd, MMMM DD");
 	const time = dayjs(now).format("hh:mm");
 
 	return (
-		<section className="grid min-h-[100svh] place-items-center px-5 py-8 sm:px-8">
+		<section className="clock-background grid min-h-[100svh] place-items-center px-5 py-8 sm:px-8">
 			<div className="w-full max-w-6xl min-w-0">
 				<div className="min-w-0">
 					<p className="text-sm font-semibold uppercase tracking-normal text-[var(--clock-accent)] sm:text-base">
 						{date}
 					</p>
-					<h1 className="mt-4 whitespace-nowrap text-[3.25rem] font-black leading-none tracking-normal text-white min-[360px]:text-[3.9rem] sm:text-[6rem] md:text-[8rem] lg:text-[10rem] xl:text-[12rem]">
-						{time}
-					</h1>
+					<ClockDisplay
+						value={time}
+						animate={animateClock}
+						className="mt-4 text-[3.25rem] min-[360px]:text-[3.9rem] sm:text-[6rem] md:text-[8rem] lg:text-[10rem] xl:text-[12rem]"
+					/>
 					<WeatherLine weather={weather} className="mt-8" />
 				</div>
 			</div>
@@ -45,23 +48,27 @@ export function FocusLayout(props) {
 }
 
 export function CalmLayout(props) {
-	const { now, weather } = props;
+	const { now, weather, animateClock } = props;
 
 	const date = dayjs(now).format("dddd, MMMM DD");
 	const time = dayjs(now).format("hh:mm:ss");
 	const [hour, min, sec] = time.split(":");
 
 	return (
-		<section className="grid min-h-[100svh] place-items-center px-5 py-6 sm:px-8">
+		<section className="clock-background grid min-h-[100svh] place-items-center px-5 py-6 sm:px-8">
 			<div className="min-w-0 text-center">
-				<p className="text-lg text-[var(--clock-accent)] sm:text-4xl">{date}</p>
+				<p className="text-lg text-zinc-100 sm:text-2xl uppercase">{date}</p>
 				<div className="flex gap-6 items-baseline">
-					<h1 className="my-6 whitespace-nowrap text-[3.25rem] font-black leading-none tracking-normal min-[360px]:text-[3.9rem] sm:text-[6rem] md:text-[8rem] lg:text-[10rem] xl:text-[11.5rem]">
-						{hour}:{min}
-					</h1>
-					<h1 className="my-6 whitespace-nowrap text-7xl font-black leading-none tracking-normal text-zinc-600">
-						{sec}
-					</h1>
+					<ClockDisplay
+						value={`${hour}:${min}`}
+						animate={animateClock}
+						className="my-6 text-[3.25rem] min-[360px]:text-[3.9rem] sm:text-[6rem] md:text-[8rem] lg:text-[10rem] xl:text-[11.5rem] font-black text-zinc-200"
+					/>
+					<ClockDisplay
+						value={sec}
+						animate={animateClock}
+						className="my-6 text-7xl text-zinc-600 font-bold"
+					/>
 				</div>
 				<WeatherLine weather={weather} className="justify-center" />
 			</div>

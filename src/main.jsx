@@ -74,6 +74,12 @@ function App() {
 		[layoutId],
 	);
 	const Layout = activeLayout.Component;
+	const themeStyle = {
+		"--clock-accent": activeLayout.theme?.accent,
+		"--clock-bg-start": activeLayout.theme?.backgroundStart,
+		"--clock-bg": activeLayout.theme?.background,
+		"--clock-bg-deep": activeLayout.theme?.backgroundDeep,
+	};
 
 	function selectLayout(nextId) {
 		setLayoutId(nextId);
@@ -102,13 +108,16 @@ function App() {
 
 	return (
 		<main
-			className="clock-background min-h-[100svh] touch-manipulation overflow-x-hidden text-zinc-200"
+			className="min-h-[100svh] touch-manipulation overflow-x-hidden"
 			onPointerUp={handlePointerUp}
+			style={themeStyle}
 		>
 			<Layout
 				now={now}
 				weather={weather}
 				weatherStatus={status}
+				animateClock={activeLayout.animateClock}
+				theme={activeLayout.theme}
 				layouts={layouts}
 				activeLayoutId={activeLayout.id}
 				onSelectLayout={selectLayout}
@@ -122,7 +131,7 @@ function normalizeWeather(data, location) {
 	return {
 		location: location.label,
 		updatedAt: current.time || new Date().toISOString(),
-		temperature: Math.round(current.temperature_2m),
+		temperature: current.temperature_2m,
 		condition: describeWeather(current.weather_code),
 		weatherCode: current.weather_code,
 		isDay: current.is_day,

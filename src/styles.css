@@ -8,12 +8,14 @@
 	font-family: Inter, ui-sans-serif, system-ui, sans-serif;
 	background: #000;
 	--clock-accent: #2f7de1;
+	--clock-bg-start: #0b1424;
 	--clock-bg: #080f1d;
 	--clock-bg-deep: #040913;
 }
 
 * {
 	box-sizing: border-box;
+	user-select: none;
 }
 
 body {
@@ -37,8 +39,74 @@ button {
 		radial-gradient(circle at 86% 88%, rgba(47, 125, 225, 0.1), transparent 30%),
 		linear-gradient(
 			135deg,
-			#0b1424 0%,
+			var(--clock-bg-start) 0%,
 			var(--clock-bg) 40%,
 			var(--clock-bg-deep) 100%
 		);
+}
+
+.clock-glyph,
+.clock-separator {
+	display: inline-grid;
+	place-items: center;
+	line-height: 1.08;
+}
+
+.clock-glyph {
+	position: relative;
+	overflow: hidden;
+}
+
+.clock-separator {
+	/* width: 0.32em; */
+}
+
+.clock-glyph-animated {
+	display: inline-grid;
+	place-items: center;
+	height: 1.14em;
+	margin-block: -0.07em;
+}
+
+.clock-glyph-old,
+.clock-glyph-new {
+	grid-area: 1 / 1;
+	will-change: transform, opacity;
+}
+
+.clock-glyph-old {
+	animation: clock-digit-out 280ms ease forwards;
+}
+
+.clock-glyph-new {
+	animation: clock-digit-in 280ms ease forwards;
+}
+
+@keyframes clock-digit-out {
+	from {
+		opacity: 1;
+		transform: translateY(0);
+	}
+	to {
+		opacity: 0;
+		transform: translateY(-0.32em);
+	}
+}
+
+@keyframes clock-digit-in {
+	from {
+		opacity: 0;
+		transform: translateY(0.32em);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.clock-glyph-old,
+	.clock-glyph-new {
+		animation: none;
+	}
 }
