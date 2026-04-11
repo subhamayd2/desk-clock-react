@@ -1,27 +1,6 @@
 import { useEffect, useState } from "react";
 
-export function ClockDisplay({ value, animate = false, className = "" }) {
-	return (
-		<h1
-			className={`flex whitespace-nowrap leading-none tracking-normal ${className}`}
-			aria-label={value}
-		>
-			{!animate
-				? value
-				: value.split("").map((character, index) => (
-						<ClockGlyph
-							// biome-ignore lint/suspicious/noArrayIndexKey: s
-							key={`${index}-${character === ":" ? "colon" : "digit"}`}
-							value={character}
-							animate={animate && character !== ":"}
-							isSeparator={character === ":"}
-						/>
-					))}
-		</h1>
-	);
-}
-
-function ClockGlyph({ value, animate, isSeparator }) {
+export function ClockGlyph({ value, animate, isSeparator }) {
 	const [glyph, setGlyph] = useState({
 		current: value,
 		previous: null,

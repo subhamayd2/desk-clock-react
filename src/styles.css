@@ -5,7 +5,7 @@
 
 :root {
 	color-scheme: dark;
-	font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+	font-family: "Chivo Mono", monospace;
 	background: #000;
 	--clock-accent: #2f7de1;
 	--clock-bg-start: #0b1424;

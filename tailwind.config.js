@@ -4,7 +4,7 @@ export default {
 	theme: {
 		extend: {
 			fontFamily: {
-				display: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
+				display: ["Chivo Mono", "monospace"],
 			},
 			boxShadow: {
 				glow: "0 0 50px rgb(32 224 186 / 0.18)",

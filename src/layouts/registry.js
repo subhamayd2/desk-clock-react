@@ -1,4 +1,5 @@
-import { CalmLayout, FocusLayout } from "./layoutComponents.jsx";
+import { CalmLayout } from "./CalmLayout.jsx";
+import { FocusLayout } from "./FocusLayout.jsx";
 import { userLayouts } from "./userLayouts.js";
 
 export const builtInLayouts = [

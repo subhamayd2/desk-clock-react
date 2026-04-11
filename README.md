@@ -26,12 +26,12 @@ npm run build
 
 ## Add Your Own Layout
 
-Define layout components in `src/userLayoutComponents.jsx`, then register them in `src/userLayouts.js`.
+Define each layout component in its own file under `src/layouts/custom/`, then register it in `src/layouts/userLayouts.js`.
 
 ```jsx
-// src/userLayoutComponents.jsx
+// src/layouts/custom/MyLayout.jsx
 import dayjs from 'dayjs';
-import { ClockDisplay } from './ClockDisplay.jsx';
+import { ClockDisplay } from '../../components/clock/ClockDisplay.jsx';
 
 export function MyLayout({ now, weather, animateClock }) {
   const time = dayjs(now).format('hh:mm:ss');
@@ -48,8 +48,8 @@ export function MyLayout({ now, weather, animateClock }) {
 ```
 
 ```js
-// src/userLayouts.js
-import { MyLayout } from './userLayoutComponents.jsx';
+// src/layouts/userLayouts.js
+import { MyLayout } from './custom/MyLayout.jsx';
 
 export const userLayouts = [
   {
@@ -67,7 +67,7 @@ export const userLayouts = [
 ];
 ```
 
-Your layout will appear automatically in the layout switcher.
+Your layout will be included automatically in the double-tap layout rotation.
 Double-tap anywhere on the page to move to the next layout.
 Set `animateClock` to `false` for layouts that should not animate clock digits.
 
