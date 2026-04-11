@@ -52,9 +52,16 @@ export function App() {
 	// biome-ignore lint/correctness/useExhaustiveDependencies: only on mount
 	useEffect(() => {
 		const autoLayoutTimer = setInterval(cycleLayout, 30 * 60 * 1000);
+		const autoRefreshTimer = setInterval(
+			() => {
+				window.location.reload();
+			},
+			60 * 60 * 1000,
+		);
 
 		return () => {
 			clearInterval(autoLayoutTimer);
+			clearInterval(autoRefreshTimer);
 		};
 	}, []);
 
