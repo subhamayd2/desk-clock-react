@@ -1,6 +1,7 @@
 import { execSync } from "node:child_process";
 import { mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
+import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 
@@ -40,5 +41,5 @@ function buildVersionPlugin() {
 }
 
 export default defineConfig({
-	plugins: [react(), buildVersionPlugin()],
+	plugins: [react(), buildVersionPlugin(), tailwindcss()],
 });

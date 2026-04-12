@@ -9,19 +9,29 @@ export function CalmLayout({ now, weather, animateClock }) {
 	const [hour, min, sec] = time.split(":");
 
 	return (
-		<section className="clock-background grid min-h-[100svh] place-items-center px-5 py-6 sm:px-8">
-			<div className="min-w-0 text-center">
-				<p className="text-7xl text-[#b0d3ff] uppercase">{date}</p>
+		<section className="clock-background grid min-h-svh place-items-center px-5 py-6 sm:px-8">
+			<div className="flex flex-col gap-2 min-w-0 text-center">
+				<p className="text-7xl text-[#b0d3ff] uppercase font-inter">{date}</p>
 				<div className="flex gap-6 items-baseline">
-					<ClockDisplay
-						value={`${hour}:${min}`}
-						animate={animateClock}
-						className="my-6 text-[20rem] font-semibold text-zinc-200"
-					/>
+					<div className="flex gap-3">
+						<ClockDisplay
+							value={hour}
+							animate={animateClock}
+							className="text-[20rem] font-semibold text-zinc-200"
+						/>
+						<p className="text-[20rem] leading-none tracking-normal font-semibold font-inter text-(--clock-accent) opacity-50">
+							:
+						</p>
+						<ClockDisplay
+							value={min}
+							animate={animateClock}
+							className="text-[20rem] font-semibold text-zinc-200"
+						/>
+					</div>
 					<ClockDisplay
 						value={sec}
 						animate={animateClock}
-						className="my-6 text-[8rem] text-zinc-600"
+						className="text-[8rem] text-zinc-600"
 					/>
 				</div>
 				<WeatherLine loading={!weather}>
@@ -29,9 +39,12 @@ export function CalmLayout({ now, weather, animateClock }) {
 						<WeatherIcon
 							code={weather.weatherCode}
 							isDay={weather.isDay}
-							className={"h-56 w-56 shrink-0 text-[var(--clock-accent)]"}
+							className={"h-56 w-56 shrink-0 text-(--clock-accent)"}
 						/>
-						<p className="text-8xl text-[#b0d3ff]">{weather.temperature}°C</p>
+						<p className="text-8xl text-[#b0d3ff] font-inter">
+							{weather.temperature}
+							<span className="text-6xl ml-4 opacity-80">°C</span>
+						</p>
 					</div>
 				</WeatherLine>
 			</div>

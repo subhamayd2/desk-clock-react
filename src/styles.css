@@ -1,7 +1,13 @@
 /** biome-ignore-all lint/suspicious/noUnknownAtRules: no rules */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@utility font-chivo {
+	font-family: "Chivo Mono", monospace;
+}
+
+@utility font-inter {
+	font-family: "Inter", sans-serif;
+}
 
 :root {
 	color-scheme: dark;
@@ -64,8 +70,8 @@ button {
 .clock-glyph-animated {
 	display: inline-grid;
 	place-items: center;
-	height: 1.14em;
-	margin-block: -0.07em;
+	/* height: 1.14em; */
+	/* margin-block: -0.07em; */
 }
 
 .clock-glyph-old,
