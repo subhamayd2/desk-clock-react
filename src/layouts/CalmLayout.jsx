@@ -11,7 +11,7 @@ export function CalmLayout({ now, weather, animateClock }) {
 	return (
 		<section className="clock-background grid min-h-[100svh] place-items-center px-5 py-6 sm:px-8">
 			<div className="min-w-0 text-center">
-				<p className="text-5xl text-[var(--clock-accent)] uppercase">{date}</p>
+				<p className="text-7xl text-[#b0d3ff] uppercase">{date}</p>
 				<div className="flex gap-6 items-baseline">
 					<ClockDisplay
 						value={`${hour}:${min}`}
@@ -29,9 +29,9 @@ export function CalmLayout({ now, weather, animateClock }) {
 						<WeatherIcon
 							code={weather.weatherCode}
 							isDay={weather.isDay}
-							className={"h-32 w-32 shrink-0 text-[var(--clock-accent)]"}
+							className={"h-56 w-56 shrink-0 text-[var(--clock-accent)]"}
 						/>
-						<p className="text-6xl">{weather.temperature}°C</p>
+						<p className="text-8xl text-[#b0d3ff]">{weather.temperature}°C</p>
 					</div>
 				</WeatherLine>
 			</div>
