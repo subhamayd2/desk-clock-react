@@ -4,6 +4,8 @@ import { useWeather } from "./hooks/useWeather.js";
 import { layouts } from "./layouts/registry.js";
 import { readStorage, writeStorage } from "./lib/storage.js";
 
+const VERSION_CHECK_INTERVAL = 20 * 1000;
+
 export function App() {
 	const now = useClock();
 	const { weather, status } = useWeather();
@@ -52,16 +54,49 @@ export function App() {
 	// biome-ignore lint/correctness/useExhaustiveDependencies: only on mount
 	useEffect(() => {
 		const autoLayoutTimer = setInterval(cycleLayout, 30 * 60 * 1000);
-		const autoRefreshTimer = setInterval(
-			() => {
-				window.location.reload();
-			},
-			60 * 60 * 1000,
+		let currentVersion;
+		let isCheckingVersion = false;
+
+		async function checkForNewVersion() {
+			if (isCheckingVersion || document.visibilityState === "hidden") {
+				return;
+			}
+
+			isCheckingVersion = true;
+
+			try {
+				const response = await fetch(`/version.json?t=${Date.now()}`, {
+					cache: "no-store",
+				});
+				if (!response.ok) return;
+
+				const { version } = await response.json();
+				if (!version) return;
+
+				if (!currentVersion) {
+					currentVersion = version;
+					return;
+				}
+
+				if (version !== currentVersion) {
+					window.location.reload();
+				}
+			} catch {
+				// The clock should keep running if the network is offline.
+			} finally {
+				isCheckingVersion = false;
+			}
+		}
+
+		checkForNewVersion();
+		const versionTimer = setInterval(
+			checkForNewVersion,
+			VERSION_CHECK_INTERVAL,
 		);
 
 		return () => {
 			clearInterval(autoLayoutTimer);
-			clearInterval(autoRefreshTimer);
+			clearInterval(versionTimer);
 		};
 	}, []);
 
