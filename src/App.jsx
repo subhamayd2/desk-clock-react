@@ -111,10 +111,10 @@ export function App() {
 				now={now}
 				weather={weather}
 				weatherStatus={status}
-				animateClock={activeLayout.animateClock}
-				theme={activeLayout.theme}
+				animateClock={activeLayout.current.animateClock}
+				theme={activeLayout.current.theme}
 				layouts={layouts}
-				activeLayoutId={activeLayout.id}
+				activeLayoutId={activeLayout.current.id}
 				onSelectLayout={selectLayout}
 			/>
 		</main>
