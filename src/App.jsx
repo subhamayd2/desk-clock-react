@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useClock } from "./hooks/useClock.js";
 import { useWeather } from "./hooks/useWeather.js";
 import { layouts } from "./layouts/registry.js";
@@ -14,26 +14,27 @@ export function App() {
 	);
 	const lastTapAt = useRef(0);
 
-	const activeLayout = useMemo(
-		() => layouts.find((layout) => layout.id === layoutId) || layouts[0],
-		[layoutId],
-	);
-	const Layout = activeLayout.Component;
+	const getActiveLayoutById = (id) =>
+		layouts.find((layout) => layout.id === id) || layouts[0];
+
+	const activeLayout = useRef(getActiveLayoutById(layoutId));
+	const Layout = activeLayout.current.Component;
 	const themeStyle = {
-		"--clock-accent": activeLayout.theme?.accent,
-		"--clock-bg-start": activeLayout.theme?.backgroundStart,
-		"--clock-bg": activeLayout.theme?.background,
-		"--clock-bg-deep": activeLayout.theme?.backgroundDeep,
+		"--clock-accent": activeLayout.current.theme?.accent,
+		"--clock-bg-start": activeLayout.current.theme?.backgroundStart,
+		"--clock-bg": activeLayout.current.theme?.background,
+		"--clock-bg-deep": activeLayout.current.theme?.backgroundDeep,
 	};
 
 	function selectLayout(nextId) {
 		setLayoutId(nextId);
+		activeLayout.current = getActiveLayoutById(nextId);
 		writeStorage("desk-clock-layout", nextId);
 	}
 
 	function cycleLayout() {
 		const currentIndex = layouts.findIndex(
-			(layout) => layout.id === activeLayout.id,
+			(layout) => layout.id === activeLayout.current.id,
 		);
 		const nextLayout =
 			layouts[(currentIndex + 1) % layouts.length] || layouts[0];
@@ -102,7 +103,7 @@ export function App() {
 
 	return (
 		<main
-			className="min-h-[100svh] touch-manipulation overflow-x-hidden"
+			className="min-h-svh touch-manipulation overflow-x-hidden"
 			onPointerUp={handlePointerUp}
 			style={themeStyle}
 		>
